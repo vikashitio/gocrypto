@@ -1,0 +1,119 @@
+{{template "partials/header" .}}
+<style>
+    .img-icon { width: 40px;margin-right: 10px;}
+    </style>
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+<div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+         
+
+          <div class="row">
+            <div class="col-lg-8">
+                <h4 class="header-title mb-4"> <span data-toggle="tooltip" data-placement="right"> {{.Title}} - {{.Action}}</span></h4>
+            </div>
+            <div class="col-lg-4 text-end my-2"> {{if eq .Action "List"}}<a href="/add-coin" title="Add Coin" class="btn btn-sm btn-outline-primary template"> Add Coin</a>{{end}}</div>
+      </div>
+  
+      {{if .Alert}}
+      <div class="row">
+      <div class="alert alert-warning alert-dismissible fade show mx-2" role="alert">
+        <strong>{{.Alert}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+      {{end}}
+
+      {{if eq .Action "List"}}
+
+          <div class="table-responsive">
+            <table class="table table-centered table-nowrap mb-0">
+              <thead class="bg-primary text-white">
+                <tr class="font-weight-bolder">
+                  <th scope="col">ID</th>
+                  <th scope="col">Icon</th>
+                  <th scope="col">Coin</th>
+                  <th scope="col">Status</th>
+                  <th scope="col" class="text-end mx-2">Action</th>
+                </tr>
+              </thead>
+              <tbody id="none">
+                  {{range .CoinList}}
+                <tr>
+                  <td>{{.Coin_id}}</td>
+                  <td><img class="img-icon" src="/views/images/{{.Icon}}" title="{{.Coin}}"/></td>
+                  <td>{{.Coin}}</td>
+                  <td>{{if eq .Status 1}} Active {{else}} Deleted {{end}}</td>
+                  <td class="text-end mx-2"><a class="text-dark mx-2" href="/coin-list/edit/{{.Coin_id}}" title="EDIT COIN"><i class="fa-solid fa-pen-to-square"></i></a> <a class="text-danger mx-2" href="/coin-list/delete/{{.Coin_id}}" title="DELETE COIN"><i class="fa-solid fa-trash"></i></a></td>
+                </tr>
+                {{end}}
+                <tr>
+                  <td class="text-end mx-2 fs-6" colspan="5"> 
+                    {{if .Count}} Total Record : {{.Count}} {{end}}
+                    {{if .PrevPage}}
+                  <a href="/coin-list?page={{.PrevPage}}&limit={{.Limit}}" class="mx-2" title="Previous"><i class="fa-solid fa-backward"></i></a>
+              {{end}}
+              {{if .NextPage}}
+                  <a href="/coin-list?page={{.NextPage}}&limit={{.Limit}}" class="mx-2" title="Next"><i class="fa-solid fa-forward"></i></a>
+              {{end}}
+
+
+                  </td>
+                  
+                </tr>
+              </tbody>
+            </table>
+           
+          </div>
+
+      {{else}}
+    
+      <form method="POST" action="/CoinPost" autocomplete="off" enctype="multipart/form-data">
+      <input type="hidden" name="coinId" value="{{if .CoinID}}{{.CoinID}}{{end}}">
+      <input type="hidden" name="mode" value="{{.Action}}">
+      
+        <div class="row">
+        
+         
+
+          <div class="col-md-4 my-2">
+            <div class="form-floating">
+              <input type="text" id="coin" name="coin" class="form-control" title="coin" required="" value="{{if .CoinTitle}}{{.CoinTitle}}{{end}}">
+              <label for="mobile">Coin</label>
+            </div>
+          </div>
+          <div class="col-md-4 my-2">
+            <div class="form-floating">
+              <input type="file" id="icon" name="icon" class="form-control" title="Icon" required="" value="{{if .CoinIcon}}{{.CoinIcon}}{{end}}">
+              <label for="address_line1">Icon</label>
+            </div>
+          </div>
+
+          <div class="col-md-4 my-2">
+            <div class="form-floating">
+              <select class="form-select" name="status" id="status" title="Status" required="">
+              <option value=1 {{ if eq .CoinStatus 1 }}selected{{end}}>Active</option>
+              <option value=2 {{ if eq .CoinStatus 2 }}selected{{end}}>Deleted</option>
+              </select>
+              <label for="status">Status</label>
+              
+            </div>
+          </div>
+        
+          
+          
+        </div>
+        <button type="submit" id="submit" class="btn btn-sm btn-primary template" name="submit" title="submit" value="submit">Submit</button>
+      </form>
+      {{end}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
+</div> 
+</div>
+  {{template "partials/footer" .}}
