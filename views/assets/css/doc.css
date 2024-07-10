@@ -1,0 +1,9 @@
+@charset "UTF-8";
+body{
+    background-color: blueviolet !important;
+    font-size: 20px !important;
+}
+
+.vikash{ font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+font-size: 30px;
+color: brown;}

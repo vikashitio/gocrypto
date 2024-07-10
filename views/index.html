@@ -1,0 +1,177 @@
+{{template "partials/header" .}}
+{{.LoginHistory}}
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+<div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="header-title mb-4"> <span data-toggle="tooltip" data-placement="right"> {{ .Title }} </span></h4>
+
+          <div class="">
+        
+            <div style="padding-bottom:-50px;">
+      <script src="https://price-static.crypto.com/latest/public/static/widget/index.js"></script>
+      <div id="crypto-widget-CoinMarquee" data-design="classic"  data-coin-ids="1,166,136,382,1120,20,2180,1986,29,440"></div>
+      </div>
+              
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row my-2">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="header-title mb-4"> <span data-toggle="tooltip" data-placement="right"> My Wallet </span></h4>
+
+          <div class="">
+        
+          ------------
+              
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row my-2">
+    <div class="col-lg-12">
+      <div class="card bg-primary text-light">
+        <div class="card-body">
+          <h4 class="header-title">Crypto Exchange Rate</h4>
+          <form method="POST" action="/exchanGeneratePost" autocomplete="off">
+            <div class="row">
+              
+              <div class="col-sm-4 my-1">
+                <div class="form-floating">
+                  <select name="fromcurrency" id="fromcurrency" class="form-select bg-transparent text-warning">
+                      <option value="ADX">ADX</option>
+                      <option value="AFG">AFG</option>
+                      <option value="AIR">AIR</option>
+                      <option value="ALGO">ALGO</option>
+                      <option value="ARX">ARX</option>
+                      <option value="BTC">BTC</option>
+                      <option value="DOGE">DOGE</option>
+                      <option value="DSH">DSH</option>
+                      <option value="ETC">ETC</option>
+                      <option value="ETH">ETH</option>
+                      <option value="USD">USD</option>
+                      <option value="USDT">USDT</option>
+                      <option value="USDC">USDC</option>
+                      
+                    
+                  </select>
+                  <label for="amount">Crypto Currency From</label>
+                </div>
+              </div>
+              <div class="col-sm-4  my-1">
+                <div class="form-floating">
+                  <select name="tocurrency" id="tocurrency" class="form-select bg-transparent text-warning">
+                    <option value="">Select Currency To</option>
+                    <option value="AED">AED - United Arab Emirates dirham</option>
+                    <option value="ADX">ADX</option>
+                    <option value="AFG">AFG</option>
+                    <option value="AIR">AIR</option>
+                    <option value="ALGO">ALGO</option>
+                    <option value="ARX">ARX</option>
+                    <option value="BTC">BTC</option>
+                    <option value="DOGE">DOGE</option>
+                    <option value="DSH">DSH</option>
+                    <option value="ETC">ETC</option>
+                    <option value="ETH">ETH</option>
+                    <option value="USD">USD</option>
+                    <option value="USDT">USDT</option>
+                    <option value="USDC">USDC</option>
+                  </select>
+                  <label for="tocurrency">Crypto Currency To</label>
+                </div>
+              </div>
+              <div class="col-sm-4  my-1">
+                <button type="submit" class="btn btn-warning w-100 h-100 getexchange">Convert</button>
+              </div>
+              <div class="col-sm-12 my-1 fw-bold text-center btn btn-outline-warning" id="currresult" style="display:none;"></div>
+          
+  
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="header-title mb-4"> <span> Latest 5 Transactions</span></h4>
+          <div class="table-responsive">
+            <table class="table table-centered table-nowrap mb-0">
+              <thead class="bg-primary text-white">
+                <tr class="text-start">
+                  <th scope="col">TransID</th>
+                  <th scope="col">Bill Amt</th>
+                  <th scope="col">Trans Amt</th>
+                  <th scope="col">Timestamp</th>
+                  <th scope="col">Trans Response</th>
+                  <th scope="col">Trans Status</th>
+                  <th scope="col">Settlement Date</th>
+                </tr>
+              </thead>
+              <tbody id="none">
+                {{range .ListData}}
+                <tr class="text-start">
+                  <td><a href="transaction-details.php?tid=21" title="Transaction details "> {{.TransID}} </a></td>
+                  <td>{{.BillAmount}} {{.BillCurrency}}</td>
+                  <td>{{.TransAmount}} {{.TransCurrency}}</td>
+                  <td>{{.Timestamp}}</td>
+                  <td>Credit</td>
+                  <td> {{.TransStatus}} </td>
+                  <td>{{.SettlementDate}}</td>
+                </tr>
+                {{end}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+  {{template "partials/footer" .}}
+  <script>
+    $('.getexchange').click(function(){
+      //alert(12345);
+         var curramt=$('#curramt').val();
+         var fromcurrency=$('#fromcurrency').val();
+         var tocurrency=$('#tocurrency').val();
+         
+         if(curramt==''){
+            alert('Please enter amount');
+          $('#curramt').focus();
+          return false;
+        }else if(fromcurrency==''){
+            alert('Please select from currency');
+          $('#fromcurrency').focus();
+          return false;
+        }else if(tocurrency==''){
+            alert('Please select to currency');
+          $('#tocurrency').focus();
+          return false;
+        }
+        
+       
+   });
+        
+   
+    </script>
+
+  
